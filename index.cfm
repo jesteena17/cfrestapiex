@@ -14,12 +14,18 @@ result="res">
 <cfset dres=deserializejson(res.Filecontent)/>
 message:#dres.message#<br>success:#dres.success#<br>jwt token: #dres.token#<br>
 
-<cfhttp url="http://api.labsmobile.com/get/send.php" method="GET"
+<cfhttp url=" https://fakestoreapi.com/products" method="GET"
 resolveurl="false" result="resp">
-<cfhttpparam type="FORMFIELD" name="username" value="xx@xx.xxx">
-<cfhttpparam type="FORMFIELD" name="password" value="xxxxxxx">
-<cfhttpparam type="FORMFIELD" name="message" value="#form.message#">
-<cfhttpparam type="FORMFIELD" name="msisdn" value="#form.msisdn#">
 </cfhttp>
-<cfdump var = "#resp#">
+<cfset pro=#deserializejson(resp.Filecontent)#/>
+<cfloop array="#pro#" index="i">
+#i.id#-#i.title#<br>
+<form action="addcart.cfc?method=additemtocart" method="post">
+    <input type="hidden" name="product_id" value="#i.id#"/>
+    <input type="hidden" name="product_name" value="#i.title#"/>
+    <input type="hidden" name="price" value="#i.price#"/>
+    <input type="hidden" name="quantity" value="1"/>
+    <input type="submit" name="addtocart" value="Add to cart"/>
+</form>
+</cfloop>
 </cfoutput>
