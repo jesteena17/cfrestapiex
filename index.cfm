@@ -13,4 +13,13 @@ result="res">
 </cfhttp>
 <cfset dres=deserializejson(res.Filecontent)/>
 message:#dres.message#<br>success:#dres.success#<br>jwt token: #dres.token#<br>
+
+<cfhttp url="http://api.labsmobile.com/get/send.php" method="GET"
+resolveurl="false" result="resp">
+<cfhttpparam type="FORMFIELD" name="username" value="xx@xx.xxx">
+<cfhttpparam type="FORMFIELD" name="password" value="xxxxxxx">
+<cfhttpparam type="FORMFIELD" name="message" value="#form.message#">
+<cfhttpparam type="FORMFIELD" name="msisdn" value="#form.msisdn#">
+</cfhttp>
+<cfdump var = "#resp#">
 </cfoutput>
