@@ -1,4 +1,5 @@
 
+<<<<<<< Updated upstream
 <cfset twilioUsername = "AC69c53128c29887bba51bcd0a713a6e79" />
 <cfset twilioPassword = "e562ccf5ea8856feb81288201965ad6b" />
 
@@ -87,11 +88,15 @@
 
 		<form method="post" action="#cgi.script_name#">
 
+=======
+		<form method="post" action="restapi/cfc/sensms.cfc?method=sendMessageWithTwilio">
+>>>>>>> Stashed changes
 			<p>
 				From:
 				<strong>Twilio</strong> -
 				<em>(rented Phone Number)</em>.
 			</p>
+<<<<<<< Updated upstream
 
 			<p>
 				To:<br />
@@ -113,3 +118,17 @@
 	</html>
 
 </cfoutput>
+=======
+			<p>
+				To:<br />
+				<input type="text" name="destinationNumber" value="+918111945425" size="20" />
+			</p>
+			<p>
+				SMS Text Message:<br />
+				<input type="text" name="aMessage" size="70" value="hi" maxlength="140" />
+			</p>
+			<p>
+				<input type="submit" value="Send SMS Message" />
+			</p>
+		</form>
+>>>>>>> Stashed changes
