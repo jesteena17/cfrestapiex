@@ -1,28 +1,28 @@
 <cfcomponent>
     <cffunction name="additemtocart" output="true" access="remote" >
-       <cflock scope="session" type="exclusive" timeout="5">
-            <cfparam name="session.cart" default="#ArrayNew(1)#">
-            <cfset sItem = StructNew()>
-            
-            <cfif StructIsEmpty(sItem) and IsStruct(sItem)>
-                <cfset sItem.product_id = form.product_id>
-                <cfset sItem.product = form.product_name>
-                <cfset sItem.price = form.price>
-                <cfset sItem.quantity =1>
-                
+        <cflock scope="session" type="exclusive" timeout="5">
+            <cfset addasnewitem = true>
+            <cfif not isDefined("session.cart")>
+                <cfset session.cart = arrayNew(1)>
             <cfelse>
-                <cfloop collection = "#sItem#" item = "itm">
-                    <cfif arraylen(StructFindValue(itm,"#form.product_id#","one")) GT 0>
-                    <cfset itm.quantity =itm.quantity+1>
-                    <cfelse>
-                    <cfset itm.quantity = form.quantity>
+                <cfloop index="i" from="1" to="#arrayLen(session.cart)#">
+                    <cfif form.productid is session.cart[i].product_id and form.userid is session.cart[i].user_id>
+                        <cfset session.cart[i].quantity = 
+                        session.cart[i].quantity + 1>
+                        <cfset addasnewitem = false>
                     </cfif>
                 </cfloop>
             </cfif>
-            <cfset ArrayAppend(session.cart, sItem)>
-            
+            <cfif addasnewitem is true>
+                <cfset sItem = StructNew()>
+                <cfset sItem.product_id = form.productid>
+                <cfset sItem.product = form.product_name>
+                <cfset sItem.price = form.price>
+                <cfset sItem.quantity = form.quantity>
+                <cfset sItem.user_id = form.userid>
+                <cfset ArrayAppend(session.cart, sItem)>
+            </cfif>
         </cflock>
-        <cfdump var=#session.cart#/>
         <cfreturn session.cart>
     </cffunction>
 </cfcomponent>
